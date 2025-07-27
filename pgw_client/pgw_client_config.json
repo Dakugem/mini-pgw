@@ -1,0 +1,7 @@
+{
+    "server_udp_ip": "127.0.0.1",
+    "server_udp_port": 65000,
+
+    "log_file": "log/pgw_client.log",
+    "log_level": "DEBUG"
+}

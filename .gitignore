@@ -1,6 +1,7 @@
+/.vscode
 /build/
 /libs/external/
-*.sh
-*.cpp
-*.h
+/libs/io_utils/test
+/pgw_server/test/session_storage_test.cpp
+/test
 *.txt
