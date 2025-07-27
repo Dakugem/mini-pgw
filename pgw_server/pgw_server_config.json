@@ -1,7 +1,7 @@
 {
     "udp_ip": "127.0.0.1",
     "udp_port": 65000,
-    "http_ip": "192.168.1.86",
+    "http_ip": "127.0.0.1",
     "http_port": 65000,
 
     "session_timeout_sec": 30,
