@@ -10,7 +10,7 @@
     "cdr_file": "cdr/cdr_log.csv",
     "cdr_file_max_lines": 10000,
     "log_file": "log/pgw_server.log",
-    "log_level": "DEBUG",
+    "log_level": "INFO",
 
     "blacklist": [
         "012345678901234",

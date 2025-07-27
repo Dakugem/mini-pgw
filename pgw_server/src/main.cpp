@@ -97,12 +97,6 @@ void process(std::atomic<bool> &stop,
                 }
             }
         }
-
-        // Ограничение на скорость обработки пакетов
-        auto start = clock();
-        auto end = start;
-        while (end - start < CLOCKS_PER_SEC / 1000000)
-            end = clock();
     }
 }
 
@@ -131,7 +125,7 @@ int main()
 
     quill::Backend::start();
 
-    // Создается rotation file sink, чтобы создавать новые лог файлы при переполнении старых (1 МБ) или по истечении таймаута (1 час)
+    // Создается rotation file sink, чтобы создавать новые лог файлы при переполнении старых (8 МБ) или по истечении таймаута (1 час)
     auto rotating_file_sink = quill::Frontend::create_or_get_sink<quill::RotatingFileSink>(
         server_config->log_file,
         []()
@@ -140,7 +134,7 @@ int main()
             cfg.set_open_mode('w');
             cfg.set_filename_append_option(quill::FilenameAppendOption::StartDateTime);
             cfg.set_rotation_frequency_and_interval('H', 1);
-            cfg.set_rotation_max_file_size(1024 * 1024);
+            cfg.set_rotation_max_file_size(1024 * 1024 * 8);
 
             return cfg;
         }());

@@ -8,7 +8,7 @@ namespace IO_Utils{
     //Важно чтобы к очереди имели доступ только два потока
     template<typename T>
     class Queue{
-        const size_t capacity;
+        size_t capacity;
         std::unique_ptr<std::unique_ptr<T>[]> buffer;
 
         alignas(64) std::atomic<size_t> head{0};
@@ -54,6 +54,18 @@ namespace IO_Utils{
 
         Queue(const Queue&) = delete;
         Queue& operator=(const Queue&) = delete;
+
+        Queue(Queue&& other) : capacity(other.capacity), buffer(std::move(other.buffer)), head(other.head.load()), tail(other.tail.load()){}
+        Queue& operator=(Queue&& other){
+            if(this != &other){
+                capacity = other.capacity;
+                buffer = std::move(other.buffer);
+                head = other.head.load();
+                tail = other.tail.load();
+            }
+
+            return *this;
+        }
     };
 }
 

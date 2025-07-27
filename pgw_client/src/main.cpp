@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
     quill::Backend::start();
 
-    // Создается rotation file sink, чтобы создавать новые лог файлы при переполнении старых (1 МБ) или по истечении таймаута (1 час)
+    // Создается rotation file sink, чтобы создавать новые лог файлы при переполнении старых (8 МБ) или по истечении таймаута (1 час)
     auto rotating_file_sink = quill::Frontend::create_or_get_sink<quill::RotatingFileSink>(
         client_config->log_file,
         []()
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
             cfg.set_open_mode('w');
             cfg.set_filename_append_option(quill::FilenameAppendOption::StartDateTime);
             cfg.set_rotation_frequency_and_interval('H', 1);
-            cfg.set_rotation_max_file_size(1024 * 1024);
+            cfg.set_rotation_max_file_size(1024 * 1024 * 8);
 
             return cfg;
         }());
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     {
         io_worker = new IO_Utils::IO_Worker(
             "0.0.0.0", 0,
-            "255.255.255.255", 65535,
+            "0.0.0.0", 0,
             logger);
     }
     catch (const std::exception &e)

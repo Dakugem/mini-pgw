@@ -20,10 +20,10 @@ namespace PGW
             std::chrono::seconds timeout{session_timeout_in_seconds.load()};
 
             for (auto &shard : shards)
-            {
-                auto current_time = std::chrono::steady_clock::now();
-                
+            {               
                 std::unique_lock lock(shard.mutex);
+
+                auto current_time = std::chrono::steady_clock::now();
 
                 auto it = shard.sessions.begin();
                 while (it != shard.sessions.end())
@@ -53,10 +53,10 @@ namespace PGW
 
         for (size_t i = 0; i < amount_of_shards; ++i)
         {
-            auto current_time = std::chrono::steady_clock::now();
-
             Shard &shard = shards[i];
             std::unique_lock lock(shard.mutex);
+
+            auto current_time = std::chrono::steady_clock::now();
 
             auto it = shard.sessions.begin();
             while (it != shard.sessions.end())

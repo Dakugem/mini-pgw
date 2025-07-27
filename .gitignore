@@ -1,6 +1,3 @@
 /.vscode
 /build/
 /libs/external/
-/libs/io_utils/test/io_worker_test.cpp
-/pgw_server/test/session_storage_test.cpp
-/test

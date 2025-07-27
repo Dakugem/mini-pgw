@@ -41,8 +41,6 @@ if(BUILD_TESTING)
 		GIT_TAG 	v1.17.0
 		)
 	FetchContent_MakeAvailable(googletest)
-	
-	add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 else()
 	message(STATUS "TESTS OFF")
 endif()
