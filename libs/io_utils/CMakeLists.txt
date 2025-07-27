@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.23)
 project("io_utils")
 
 #Проверить какой именно стандарт действительно нужен
-set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB Sources CONFIGURE_DEPENDS
