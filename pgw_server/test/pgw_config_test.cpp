@@ -72,6 +72,9 @@ TEST_F(ConfigTest, InvalidLogLevel) {
 
 TEST_F(ConfigTest, HotReload) {
     PGW::Config config("test_config.json");
+
+    // Поправка, чтобы слишком быстро работающий тест не ломался (если время создания и изменения файла одинаковое, то тест не сработает)
+    std::this_thread::sleep_for(std::chrono::seconds(2));
     
     // Модифицируем конфиг в процессе работы
     std::ofstream config_modified("test_config.json");
