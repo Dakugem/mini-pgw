@@ -16,6 +16,8 @@ class SessionStorageTest : public ::testing::Test
 protected:
     static quill::Logger *main_logger;
     static PGW::CDR_Journal *main_cdr;
+    static std::atomic<size_t> timeout;
+    static std::atomic<size_t> rate;
 
     static void SetUpTestSuite()
     {
@@ -37,12 +39,13 @@ protected:
         main_logger = quill::Frontend::create_or_get_logger("root", std::move(file_sink));
         main_logger->set_log_level(quill::LogLevel::Debug);
         main_cdr = new PGW::CDR_Journal("test_cdr/test_storage_cdr.csv", 100, main_logger);
+
+        timeout.store(30);
+        rate.store(100);
     }
 
     void SetUp() override
     {
-        std::atomic<size_t> timeout(30);
-        std::atomic<size_t> rate(100);
         PGW::IMSI blacklisted_imsi;
         blacklisted_imsi.set_IMSI_from_str("0123456789");
         std::unordered_set<PGW::IMSI> blacklist{blacklisted_imsi};
@@ -75,6 +78,8 @@ protected:
 
 quill::Logger *SessionStorageTest::main_logger = nullptr;
 PGW::CDR_Journal *SessionStorageTest::main_cdr = nullptr;
+std::atomic<size_t> SessionStorageTest::timeout(0);
+std::atomic<size_t> SessionStorageTest::rate(0);
 
 TEST_F(SessionStorageTest, CreateSession)
 {
